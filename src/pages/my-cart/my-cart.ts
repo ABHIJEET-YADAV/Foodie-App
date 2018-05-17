@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { CheckoutPage } from '../Checkout/Checkout';
 /**
  * Generated class for the MyCartPage page.
  *
@@ -13,53 +14,81 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'my-cart.html',
 })
 export class MyCartPage {
-
-  qty1:any;
-  qty2:any;
-  price1=500;
-  price2=1000;
   tax=13.50;
-  total;
-  subtotal;
+  total=0;
+  subtotal=0;
+  i:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) { this.qty1 = 1; this.qty2 = 1;
-    this.total = this.price1 + this.price2 + this.tax; this.subtotal = this.price1 + this.price2;
+  myProd=[
+    {
+      name:"Chole bhature",
+      price:"500",
+      location:"Hanuman Dhaba",
+      totalPrice:"500",
+      qty:"1",
+
+
+    },
+    {
+      name:"Paneer tikka masala",
+      price:"1000",
+      location:"Hanuman Dhaba",
+      totalPrice:"1000",
+      qty:"1"
+
+    },
+    {
+      name:"Masala Dosa",
+      price:"1500",
+      location:"Hanuman Dhaba",
+      totalPrice:"1500",
+      qty:"1"
+
+    }
+  ]
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+   for (this.i = 0; this.i < Object.keys(this.myProd).length; this.i++) { 
+     
+    this.subtotal+=parseInt(this.myProd[this.i].price);
+  }
+  this.total=this.subtotal+this.tax;
+  console.log(this.total);
+  
   }
   // increment product qty
-incrementQty1() {
-  console.log(this.qty1+1);
-  this.qty1 += 1;
-  this.price1 = this.qty1*500;
-  this.total = this.price1 + this.price2 + this.tax;
-  this.subtotal = this.price1 + this.price2;
+  increment(value){
+    value.totalPrice= parseInt(value.totalPrice)+parseInt(value.price);
+    value.qty= parseInt(value.qty) +1;
+    this.total+=parseInt(value.price);
+    this.subtotal+=parseInt(value.price);
   }
-incrementQty2() {
-  console.log(this.qty2+1);
-  this.qty2 += 1;
-  this.price2 = this.qty2*1000;
-  this.total = this.price1 + this.price2 + this.tax;
-  this.subtotal = this.price1 + this.price2;
-  }  
-  
-  // decrement product qty
-  decrementQty1() {
-  if(this.qty1-1 < 1 ){
-  this.qty1 = 1
-  }else{
-  this.qty1 -= 1;
-  this.price1 = this.price1-500;
-  this.total = this.price1 + this.price2 + this.tax;
-  this.subtotal = this.price1 + this.price2;
-  }
-  }
-  decrementQty2() {
-    if(this.qty2-1 < 1 ){
-    this.qty2 = 1
-    }else{
-    this.qty2 -= 1;
-    this.price2 = this.price2-1000;
-    this.total = this.price1 + this.price2 + this.tax;
-    this.subtotal = this.price1 + this.price2;
+
+  decrement(value){
+    if(value.qty==1){
+      value.qty="1";
     }
+    else{
+      value.totalPrice= parseInt(value.totalPrice)-parseInt(value.price);
+      value.qty= parseInt(value.qty) -1;
+      this.total-=parseInt(value.price);
+      this.subtotal-=parseInt(value.price);
     }
+
+  }
+
+  delete(value,i){
+    this.total-=parseInt(value.totalPrice);
+    this.subtotal-=parseInt(value.totalPrice);
+    this.myProd.splice(i,1);
+    if(this.subtotal==0){
+      this.total=0;
+      this.tax=0;
+    }
+  }
+
+  onCheckout(){
+    this.navCtrl.push(CheckoutPage);
+    }  
+
 }
