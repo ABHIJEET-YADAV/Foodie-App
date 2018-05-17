@@ -26,6 +26,7 @@ export class MyCartPage {
       location:"Hanuman Dhaba",
       totalPrice:"500",
       qty:"1",
+      img:"cb"
 
 
     },
@@ -34,7 +35,8 @@ export class MyCartPage {
       price:"1000",
       location:"Hanuman Dhaba",
       totalPrice:"1000",
-      qty:"1"
+      qty:"1",
+      img:"ptm"
 
     },
     {
@@ -42,8 +44,8 @@ export class MyCartPage {
       price:"1500",
       location:"Hanuman Dhaba",
       totalPrice:"1500",
-      qty:"1"
-
+      qty:"1",
+      img:"dosa"
     }
   ]
 
